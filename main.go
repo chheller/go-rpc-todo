@@ -8,6 +8,7 @@ import (
 	"syscall"
 
 	"github.com/chheller/go-rpc-todo/config"
+	"github.com/chheller/go-rpc-todo/server"
 	"google.golang.org/grpc"
 
 	log "github.com/sirupsen/logrus"
@@ -21,7 +22,8 @@ func main() {
 	srv := grpc.NewServer();
 
 	// Register services with the server
-
+	router := server.RPCServer{Server: srv}
+	router.Init()
 
 	// Create a channel to recieve shutdown signals.
 	stop := make(chan os.Signal, 1)
