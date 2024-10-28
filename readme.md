@@ -21,5 +21,19 @@ Ensure you've installed the protoc plugins to compile to Golang
 ```sh
 go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-# Figure out how ASDF handles this particular thing 
+# If using asdf, run asdf reshim golang instead
 export PATH="$PATH:$(go env GOPATH)/bin"
+```
+
+## Testing
+### Installing grpcurl
+[Per the website](https://github.com/fullstorydev/grpcurl?tab=readme-ov-file#from-source), grpcurl can be installed via `go install` itself
+```sh
+go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
+# If using asdf, run 
+asdf reshim golang
+```
+From there, start the application and run the health check
+
+```sh
+grpcurl -plaintext -proto helloworld/helloworld.proto -d '{"name": "John Halo" }' localhost:8080 helloworld.Greeter/SayHello
