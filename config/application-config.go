@@ -13,6 +13,8 @@ type ApplicationConfiguration struct {
 	LoggerReportCaller  bool
 	HttpPrintDebugError bool
 	CacheTTL            int64
+	HttpsCertificatePath string
+	HttpsKeyPath string
 }
 
 // Loads general application configurations and packages them into a struct. Handles default values,
@@ -45,10 +47,22 @@ func loadApplicationConfiguration() *ApplicationConfiguration {
 		}
 		port = uint32(p)
 	}
+
+	httpsCertificatePath, ok := os.LookupEnv("HTTPS_CERTIFICATE_PATH")
+	if !ok {
+		httpsCertificatePath = "x509/localhost.crt"
+	}
+	httpsKeyPath, ok := os.LookupEnv("HTTPS_KEY_PATH")
+	if !ok {
+		httpsKeyPath = "x509/localhost.key"
+	}
+
 	return &ApplicationConfiguration{
 		Port:                port,
 		LogLevel:            logLevel,
 		LoggerReportCaller:  os.Getenv("LOGGER_REPORT_CALLER") == "true",
 		HttpPrintDebugError: os.Getenv("HTTP_PRINT_DEBUG_ERROR") == "true",
+		HttpsCertificatePath: httpsCertificatePath,
+		HttpsKeyPath: httpsKeyPath,
 	}
 }

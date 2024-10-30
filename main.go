@@ -10,7 +10,6 @@ import (
 	"syscall"
 
 	"github.com/chheller/go-rpc-todo/config"
-	"github.com/chheller/go-rpc-todo/helper"
 	"github.com/chheller/go-rpc-todo/server"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -61,7 +60,7 @@ func main() {
 	// TODO: Load from environment
 	// TODO: Figure out how to get certs into container from k8s
 	
-	creds, err := credentials.NewServerTLSFromFile(helper.Path("x509/server_cert.pem"), helper.Path("x509/server_key.pem"))
+	creds, err := credentials.NewServerTLSFromFile(env.ApplicationConfiguration.HttpsCertificatePath, env.ApplicationConfiguration.HttpsKeyPath)
 	if err != nil {
 		log.Fatalf("failed to create credentials: %v", err)
 	}
