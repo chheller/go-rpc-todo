@@ -58,6 +58,9 @@ func main() {
 	log.SetFormatter(&log.TextFormatter{})
 	log.SetLevel(env.ApplicationConfiguration.LogLevel)
 
+	// TODO: Load from environment
+	// TODO: Figure out how to get certs into container from k8s
+	
 	creds, err := credentials.NewServerTLSFromFile(helper.Path("x509/server_cert.pem"), helper.Path("x509/server_key.pem"))
 	if err != nil {
 		log.Fatalf("failed to create credentials: %v", err)
