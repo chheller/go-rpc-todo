@@ -5,41 +5,55 @@
 - Run `turso auth login` or `turso auth login --headless` if using WSL
 - Run `turso db list`
   
-## Create self signed certificates
-run `make generate-certs` to generate local, self-signed certs in the expected path under `x509/`
-## Setup gRPC
-
-Follow the instructions at https://grpc.io/docs/languages/go/quickstart/
-
-### Install Protobuf Compiler
-```sh
-PB_REL="https://github.com/protocolbuffers/protobuf/releases"
-curl -LO $PB_REL/download/v28.3/protoc-28.3-linux-x86_64.zip
-unzip protoc-28.3-linux-x86_64.zip -d $HOME/.local/protoc
-export PATH="$PATH:$HOME/.local/protoc/bin"
-protoc --version  # Ensure compiler version is 3+
-```
-## Compile the protobufs
-Use the make file `make compile-protobuf` to compile all the protobufs. This is called automatically by `make build`
-### Plugins
-Ensure you've installed the protoc plugins to compile to Golang
+## Prequisite software
+This project assumes you use the universal version manager [asdf-vm]() 
+## Install dependencies
+This repository uses [air](), [protoc golang plugins](), and [grpcurl]() and can be installed by makefile target. Likewise, all required tooling can be installed by `asdf-vm`
 
 ```sh
-go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-# If using asdf, run asdf reshim golang instead
-export PATH="$PATH:$(go env GOPATH)/bin"
+make install-dependencies
+
+# chheller in go-rpc-todo on  main [!?] 
+# ❯ make install-dependencies
+# make[1]: Entering directory '/home/chheller/projects/go-rpc-todo'
+# asdf install
+# bun 1.1.27 is already installed
+# golang 1.23.2 is already installed
+# java zulu-17.52.19 is already installed
+# nodejs 18.7.0 is already installed
+# protoc 28.3 is already installed
+# make[1]: Leaving directory '/home/chheller/projects/go-rpc-todo'
+# make[1]: Entering directory '/home/chheller/projects/go-rpc-todo'
+# go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+# go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+# make[1]: Leaving directory '/home/chheller/projects/go-rpc-todo'
+# make[1]: Entering directory '/home/chheller/projects/go-rpc-todo'
+# go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
+# make[1]: Leaving directory '/home/chheller/projects/go-rpc-todo'
+# make[1]: Entering directory '/home/chheller/projects/go-rpc-todo'
+# go install github.com/air-verse/air@latest
+# make[1]: Leaving directory '/home/chheller/projects/go-rpc-todo'
+# make[1]: Entering directory '/home/chheller/projects/go-rpc-todo'
+# asdf reshim golang
+# make[1]: Leaving directory '/home/chheller/projects/go-rpc-todo'
 ```
+
+
 # Running the application
-Use the makefile scripts to build and run the application. For development, use `make dev` to run air, the filesystem watcher for go. Otherwise, use `make build` and `make run`. 
-# Testing
-## Installing grpcurl
-[Per the website](https://github.com/fullstorydev/grpcurl?tab=readme-ov-file#from-source), grpcurl can be installed via `go install` itself
+## Generate local certificates
 ```sh
-go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
-# If using asdf, run 
-asdf reshim golang
+make generate-certs
 ```
+## Development
+```sh
+make dev
+```
+## Build and Run
+```sh
+make build
+make run
+```
+# Testing
 
 ## Test an RPC endpoint
 From there, start the application and run the health check

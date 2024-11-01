@@ -6,6 +6,26 @@ BINARY_NAME = go-rpc-todo-app.out
 OUT_PATH = bin
 SHELL := /bin/zsh
 
+install-asdf-tooling:
+	asdf install
+install-protoc-plugin:
+	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+install-grpcurl:
+	go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
+install-air:
+	go install github.com/air-verse/air@latest
+
+reshim:
+	asdf reshim golang
+
+install-dependencies:
+	@$(MAKE) -f $(THIS_FILE) install-asdf-tooling
+	@$(MAKE) -f $(THIS_FILE) install-protoc-plugin
+	@$(MAKE) -f $(THIS_FILE) install-grpcurl
+	@$(MAKE) -f $(THIS_FILE) install-air
+	@$(MAKE) -f $(THIS_FILE) reshim
+	
 generate-certs:
 	rm -rf ${CERT_PATH}
 	mkdir -p ${CERT_PATH}
