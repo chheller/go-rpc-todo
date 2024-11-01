@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/chheller/go-rpc-todo/helloworld"
+	"github.com/chheller/go-rpc-todo/modules/helloworld"
 	"google.golang.org/grpc"
 )
 
