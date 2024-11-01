@@ -6,9 +6,9 @@
 - Run `turso db list`
   
 ## Prequisite software
-This project assumes you use the universal version manager [asdf-vm]() 
+This project assumes you use the universal version manager [asdf-vm](https://asdf-vm.com/guide/getting-started.html) 
 ## Install dependencies
-This repository uses [air](), [protoc golang plugins](), and [grpcurl]() and can be installed by makefile target. Likewise, all required tooling can be installed by `asdf-vm`
+This repository uses [air](), [protoc golang plugins](), and [grpcurl](https://github.com/fullstorydev/grpcurl) and can be installed by makefile target. Likewise, all required tooling can be installed by `asdf-vm`
 
 ```sh
 make install-dependencies
