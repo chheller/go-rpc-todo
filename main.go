@@ -6,7 +6,6 @@ import (
 	"net"
 	"os"
 	"os/signal"
-	"strings"
 	"syscall"
 
 	"github.com/chheller/go-rpc-todo/config"
@@ -29,20 +28,21 @@ func valid(authorization []string) bool {
 	if len(authorization) < 1 {
 		return false
 	}
-	token := strings.TrimPrefix(authorization[0], "Bearer ")
-	// Perform the token validation here. For the sake of this example, the code
-	// here forgoes any of the usual OAuth2 token validation and instead checks
-	// for a token matching an arbitrary string.
-	return token == "some-secret-token"
+	
+	// TODO: Verify JWT
+	return true
 }
 
 func unaryInterceptor(ctx context.Context, req any, _ *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (any, error) {
 	// authentication (token verification)
+	log.Debug("Intercepting request")
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
+		log.Debug("No metadata found")
 		return nil, errMissingMetadata
 	}
 	if !valid(md["authorization"]) {
+		log.Debug("Invalid token")
 		return nil, errInvalidToken
 	}
 	m, err := handler(ctx, req)
