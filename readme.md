@@ -6,7 +6,7 @@
 - Run `turso db list`
   
 ## Create self signed certificates
-run `make make-crt` to generate local, self-signed certs in the expected path under `x509/`
+run `make generate-certs` to generate local, self-signed certs in the expected path under `x509/`
 ## Setup gRPC
 
 Follow the instructions at https://grpc.io/docs/languages/go/quickstart/
