@@ -6,12 +6,32 @@
  * This project uses @Incubating APIs which are subject to change.
  */
 
+
+publishing {
+    publications {
+        create<MavenPublication>("GoRpcTodo") {
+          version = "1.0.0"
+          group = "com.charleshh"
+          artifactId = "go-rpc-todo"
+          from(components["java"])
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        maven {
+            name = "myRepo"
+            url = uri(layout.buildDirectory.dir("repo"))
+        }
+    }
+}
 repositories {
   mavenCentral()
 }
 
 plugins {
   id("java-library")
+  id("maven-publish")
   alias(libs.plugins.protobuf)
 }
 
